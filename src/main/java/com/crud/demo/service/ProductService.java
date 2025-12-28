@@ -1,5 +1,9 @@
-package com.crud.demo;
+package com.crud.demo.service;
 
+import com.crud.demo.repository.ProductRepository;
+//import com.crud.demo.ResourceNotFoundException;
+import com.crud.demo.dto.ProductRequest;
+import com.crud.demo.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +21,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Product getProduct(Long id){
-        return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with ID "+ id + " not found."));
-    }
+//    @Transactional(readOnly = true)
+//    public Product getProduct(Long id){
+//        return productRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Product with ID "+ id + " not found."));
+//    }
 
     @Transactional // [4] Ensures this operation is "Atomic" (all or nothing)
     public Product save(ProductRequest request){

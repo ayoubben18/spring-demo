@@ -1,5 +1,8 @@
-package com.crud.demo;
+package com.crud.demo.controller;
 
+import com.crud.demo.dto.ProductRequest;
+import com.crud.demo.model.Product;
+import com.crud.demo.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
