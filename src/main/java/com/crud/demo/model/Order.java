@@ -16,6 +16,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String customerEmail;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL , orphanRemoval = true)

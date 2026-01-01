@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
@@ -19,8 +21,9 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Order> placeOrder(@Valid @RequestBody OrderRequest request){
-        Order order = orderService.placeOrder(request);
+    public ResponseEntity<Order> placeOrder(@Valid @RequestBody OrderRequest request, Principal principal){
+        // returns our username from the JwtFilter
+        Order order = orderService.placeOrder(request, principal.getName());
 
         return ResponseEntity.ok(order);
     }
