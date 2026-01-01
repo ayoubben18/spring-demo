@@ -7,12 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 // this tells spring please create an instance of this filter and keep it in your container
 @Component
@@ -30,8 +32,13 @@ public class JwtFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             if (jwtService.isTokenValid(token)){
                 String username = jwtService.extractUsername(token);
+                String role = jwtService.extractRole(token);
 
-                var authToken = new UsernamePasswordAuthenticationToken(username, null,  Collections.emptyList());
+                // Convert the role string intp a spring security
+
+                var authority = new SimpleGrantedAuthority(role);
+
+                var authToken = new UsernamePasswordAuthenticationToken(username, null, List.of(authority));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
